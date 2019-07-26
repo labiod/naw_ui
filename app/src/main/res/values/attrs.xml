@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SlideTextView" >
+        <attr name="test" format="reference|string"/>
+        <attr name="slide_speed" format="reference|integer"/>
+        <attr name="visible_line" format="reference|integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="TruncatedTextView" >
+        <attr name="test" format="reference|string"/>
+        <attr name="slide_speed" format="reference|integer"/>
+        <attr name="visible_line" format="reference|integer"/>
+    </declare-styleable>
+</resources>
