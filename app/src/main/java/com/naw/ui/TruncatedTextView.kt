@@ -12,17 +12,12 @@ class TruncatedTextView(context: Context, attrs: AttributeSet?, defStyleAttr: In
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
     private var originalText: String = ""
-    private val ellipsisText = " [more]"
+    private var ellipsisText: String? = null
 
     init {
-        val typeArray = context.obtainStyledAttributes(attrs, R.styleable.SlideTextView, defStyleAttr, 0)
-        val test = typeArray.getString(R.styleable.SlideTextView_test)
-        ellipsisText = typeArray.getInteger(R.styleable.SlideTextView_slide_speed, 0).toLong()
-        visibleLine = typeArray.getInteger(R.styleable.SlideTextView_visible_line, 0)
-        android.util.Log.d("[KGB]", "test: $test, slideSpeed: $slideSpeed, visibleLine: $visibleLine")
-        setLines(visibleLine)
+        val typeArray = context.obtainStyledAttributes(attrs, R.styleable.TruncatedTextView, defStyleAttr, 0)
+        ellipsisText = typeArray.getString(R.styleable.TruncatedTextView_trun_text)
         typeArray.recycle()
-        slideHandler = Handler()
     }
 
     override fun setText(text: CharSequence?, type: BufferType?) {
@@ -35,23 +30,18 @@ class TruncatedTextView(context: Context, attrs: AttributeSet?, defStyleAttr: In
             originalText = text.toString()
             android.util.Log.d("[KGB]", "org: $text")
             val ellipsisCount = it.getEllipsisCount(it.lineCount - 1)
-            if (ellipsisCount > 0 ) {
+            if (ellipsisCount > 0 && ellipsisText != null) {
                 var truncateText = it.text.substring(0, it.text.length - ellipsisCount) + ELLIPSIS_NORMAL
                 android.util.Log.d("[KGB]", "before: $truncateText")
-                truncateText = truncateText.substring(0, truncateText.length - 1 - ellipsisText.length - ELLIPSIS_NORMAL.length) + ELLIPSIS_NORMAL + ellipsisText
-//                if (originalText?.length ?: 0 > 1) {
-//                    originalText = originalText!!.substring(0,
-//                        originalText!!.length - 1 - ellipsisText.length) + ellipsize
+                truncateText = truncateText.substring(0, truncateText.length - 1 - ellipsisText!!.length - ELLIPSIS_NORMAL.length) + ELLIPSIS_NORMAL + ellipsisText
                 text = truncateText
-//                    measure(widthMeasureSpec, heightMeasureSpec)
-//                }
-//                android.util.Log.d("[KGB]", "after: $truncateText")
             }
         }
     }
 
-    override fun getEllipsize(): TextUtils.TruncateAt {
-        return super.getEllipsize()
+    fun setEllipsisText(ellipsisText: String) {
+        this.ellipsisText = ellipsisText
+        requestLayout()
     }
 
     companion object {

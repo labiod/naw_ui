@@ -14,9 +14,11 @@ class MainActivity : AppCompatActivity() {
         slide_button.setOnClickListener {
             slide_view.startSlideLine()
         }
-        text_to_cut.text = "This is very long text and will be truncate, but how to do that? Maybe i need so extra view or utils" +
-                "I think i must write more letter because now text is to short, for example: this is place for some examples" +
+        text_to_cut.text = "This is very long text and will be truncate, but how to do that? Maybe i need so extra view or utils " +
+                "I think i must write more letter because now text is to short, for example: this is place for some examples " +
                 "first is text about nothing; second text about something you would say when you read this desc and the last " +
                 "UPPER CASE TEXT if you want more please write next line"
+
+        text_to_cut.setEllipsisText(" [This is custom ellipsisText]")
     }
 }
